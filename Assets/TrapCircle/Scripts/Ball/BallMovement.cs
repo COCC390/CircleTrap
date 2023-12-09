@@ -7,8 +7,6 @@ public class BallMovement : MonoBehaviour
     [Header("Ball init")]
     [SerializeField] private float _initSpeed;
 
-    //[SerializeField] private Vector2 _initPos;
-
     [Header("Ball stats")]
     [SerializeField] private float _ballSpeed;
 
@@ -26,10 +24,11 @@ public class BallMovement : MonoBehaviour
 
     private IEnumerator InitBall(Vector2 targetPos)
     {
-        while(Vector2.Distance(this.transform.position, targetPos) > 0.1f)
-        {
-            Vector2.Lerp(this.transform.position, targetPos, _initSpeed * Time.deltaTime);
-        }
+        Vector2.Lerp(this.transform.position, targetPos, _initSpeed * Time.deltaTime);
+
+        //while (Vector2.Distance(this.transform.position, targetPos) > 0.1f)
+        //{
+        //}
         yield return null;
     }
 }
