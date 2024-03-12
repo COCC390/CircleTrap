@@ -15,10 +15,12 @@ public class BallMovement : MonoBehaviour
     [SerializeField] private float _currentAngle;
     [SerializeField] private float _ballSpeed;
 
+    [SerializeField] private float _currentRadian;
 
     void Start()
     {
         Vector2 initTargetPos = new Vector2(this.transform.position.x, this.transform.position.y + _outerRadian);
+        _currentRadian = _outerRadian;
 
         StartCoroutine(InitBall(initTargetPos, _initTime));
     }
@@ -26,8 +28,22 @@ public class BallMovement : MonoBehaviour
     private void FixedUpdate()
     {
         if(_canMoving) 
-            BallMove(_outerRadian);
+            BallMove(_currentRadian);
     }
+
+    public void ChangeCurrentRadian()
+    {
+        _currentRadian = _currentRadian == _outerRadian ? _innerRadian : _outerRadian;
+
+        //if(_currentRadian == _outerRadian)
+        //{
+        //    _currentRadian = Mathf.Lerp(_currentRadian, _innerRadian, _ballSpeed * Time.deltaTime);
+        //}
+        //else
+        //{
+        //    _currentRadian = Mathf.Lerp(_currentRadian, _outerRadian, _ballSpeed * Time.deltaTime);
+        //}
+    }    
 
     private void BallMove(float radius)
     {
