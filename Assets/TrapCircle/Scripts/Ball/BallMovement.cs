@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,57 +6,90 @@ using UnityEngine;
 public class BallMovement : MonoBehaviour
 {
     [Header("Ball init")]
+    [SerializeField] private CircleRenderer _circleRenderer;
     [SerializeField] private float _initTime;
 
     private bool _canMoving = false;
 
     [Header("Ball stats")]
+    [SerializeField] private float _moveRadian = 0.4f;
     [SerializeField] private float _outerRadian = 2.3f;
     [SerializeField] private float _innerRadian = 1.7f;
-    [SerializeField] private float _currentAngle;
+    [SerializeField] private float _innerBuffSpeedValue = 1.5f;
     [SerializeField] private float _ballSpeed;
+    private float _currentAngle;
+    private float _currentRadian;
 
-    [SerializeField] private float _currentRadian;
+    [Header("Ball Change Direction")]
+    [SerializeField] private float _ballSwitchRadianSpeed;
+    private float _interpolationValue = 0f;
+    private float _targetRadian;
+    private bool _isChangeRadian = false;
+
+    public delegate void BallChangeRadian();
+    public static BallChangeRadian ChangeCurrenRadianHandle;
 
     void Start()
     {
+        SetBallMoveRadian(_circleRenderer.Radius);
+
         Vector2 initTargetPos = new Vector2(this.transform.position.x, this.transform.position.y + _outerRadian);
         _currentRadian = _outerRadian;
 
         StartCoroutine(InitBall(initTargetPos, _initTime));
+
+        ChangeCurrenRadianHandle += ChangeCurrentRadian;
+    }
+
+    private void OnDestroy()
+    {
+        ChangeCurrenRadianHandle -= ChangeCurrentRadian;
     }
 
     private void FixedUpdate()
     {
         if(_canMoving) 
             BallMove(_currentRadian);
+
+        if(_isChangeRadian)
+        {
+            _currentRadian = Mathf.Lerp(_currentRadian, _targetRadian, _interpolationValue);
+            _interpolationValue = _ballSwitchRadianSpeed * Time.deltaTime;
+
+            if (_interpolationValue >= 1)
+            {
+                _isChangeRadian = false;
+                _interpolationValue = 0;
+            }
+        }
+    }
+
+    private void SetBallMoveRadian(float mainCircleRadius)
+    {
+        _innerRadian = mainCircleRadius - _moveRadian;
+        _outerRadian = mainCircleRadius + _moveRadian;
     }
 
     public void ChangeCurrentRadian()
     {
-        _currentRadian = _currentRadian == _outerRadian ? _innerRadian : _outerRadian;
-
-        //if(_currentRadian == _outerRadian)
-        //{
-        //    _currentRadian = Mathf.Lerp(_currentRadian, _innerRadian, _ballSpeed * Time.deltaTime);
-        //}
-        //else
-        //{
-        //    _currentRadian = Mathf.Lerp(_currentRadian, _outerRadian, _ballSpeed * Time.deltaTime);
-        //}
-    }    
+        _isChangeRadian = true;
+        
+        _targetRadian = _targetRadian == _innerRadian ? _outerRadian : _innerRadian;
+    }
 
     private void BallMove(float radius)
     {
-        _currentAngle += _ballSpeed * Time.deltaTime;
+        if (_targetRadian == _innerRadian)
+            _currentAngle += _ballSpeed * 1.5f * Time.deltaTime;
+        else
+            _currentAngle += _ballSpeed * Time.deltaTime;
 
         // Calculate the new position based on the angle and radius
         float xPos = Mathf.Cos(_currentAngle) * radius;
         float yPos = Mathf.Sin(_currentAngle) * radius;
-
         // Set the GameObject's position
         transform.position = new Vector3(xPos, yPos, 0f);
-    }    
+    }
 
     private IEnumerator InitBall(Vector2 targetPos, float time)
     {
@@ -63,14 +97,13 @@ public class BallMovement : MonoBehaviour
 
         while (elapsedTime < time && Vector3.Distance(this.transform.position, targetPos) >= 0.1f)
         {
-            this.transform.position = Vector2.Lerp(this.transform.position, targetPos, elapsedTime / time);
+            transform.position = Vector2.Lerp(this.transform.position, targetPos, elapsedTime / time);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
         _currentAngle = Mathf.Atan2(this.transform.position.y, this.transform.position.x);
-        _outerRadian = this.transform.position.y;
         _canMoving = true;
-
     }
+
 }

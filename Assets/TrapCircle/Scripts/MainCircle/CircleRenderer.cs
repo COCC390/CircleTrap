@@ -10,6 +10,7 @@ public class CircleRenderer : MonoBehaviour
     [Header("Circle Stats")]
     [SerializeField] private int _steps;
     [SerializeField] private float _radius;
+    public float Radius => _radius;
 
     void Start()
     {
