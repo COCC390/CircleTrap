@@ -95,9 +95,9 @@ public class BallMovement : MonoBehaviour
     {
         float elapsedTime = 0;
 
-        while (elapsedTime < time && Vector3.Distance(this.transform.position, targetPos) >= 0.1f)
+        while (elapsedTime < time && Vector3.Distance(this.transform.position, targetPos) > 0)
         {
-            transform.position = Vector2.Lerp(this.transform.position, targetPos, elapsedTime / time);
+            transform.position = Vector2.MoveTowards(transform.position, targetPos, elapsedTime / time);
             elapsedTime += Time.deltaTime;
             yield return null;
         }

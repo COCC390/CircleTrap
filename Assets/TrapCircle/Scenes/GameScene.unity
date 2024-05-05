@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 31225622}
   m_Layer: 0
-  m_Name: TrapPool
+  m_Name: TrapManagement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -440,8 +440,9 @@ GameObject:
   m_Component:
   - component: {fileID: 923662584}
   - component: {fileID: 923662585}
+  - component: {fileID: 923662586}
   m_Layer: 0
-  m_Name: InputController
+  m_Name: Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -474,6 +475,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f67d571850853fb4b946114384b5686b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &923662586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923662583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fe393c23874c64796cc472a1f813ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameConfig: {fileID: 0}
+  _circleRenderer: {fileID: 0}
+  _trapManager: {fileID: 0}
+  _ballMovement: {fileID: 0}
+  _score: 0
 --- !u!1 &1237822771
 GameObject:
   m_ObjectHideFlags: 0
