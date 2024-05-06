@@ -6,12 +6,11 @@ public class TrapController : MonoBehaviour
 {
     [SerializeField] private int _maxTrap = 20;
     [SerializeField] private int _startGameTrapAmount = 3;
-    [SerializeField] private float _trapHeight = 1.3f;
 
     [SerializeField] private GameObject _trapItem;
 
     private GameController _gameController;
-    private Dictionary<int, LineRenderer> _traps = new Dictionary<int, LineRenderer>();
+    private Dictionary<int, TrapItemController> _traps = new Dictionary<int, TrapItemController>();
 
     private int _trapIndex = 0;
 
@@ -25,7 +24,8 @@ public class TrapController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            GenerateTrapIndex();
+            //GenerateTrapByIndex();
+            ChangeTrapDirection(0);
         }
     }
 
@@ -33,27 +33,29 @@ public class TrapController : MonoBehaviour
     {
         for (int i = 0; i < _startGameTrapAmount; i++)
         {
-            GenerateTrapIndex();
+            GenerateTrapByIndex();
         }
     }
 
-    private void GenerateTrapIndex()
+    private void GenerateTrapByIndex()
     {
         _trapIndex = RandomTrapIndex();
         InitTrap(_gameController.TrapRoots[_trapIndex]);
     }
 
+    private void ChangeTrapDirection(int index)
+    {
+        var trap = _traps[index];
+        trap.SetTrapDirection();
+    }
+
     private void InitTrap(Vector3 position)
     {
         var trap = Instantiate(_trapItem, this.transform);
-        LineRenderer lineRenderer = trap.GetComponent<LineRenderer>();
-        var points = new Vector3[2]
-        {
-                position, new Vector3 (position.x * _trapHeight, position.y * _trapHeight, position.z)
-        };
-        lineRenderer.SetPositions(points);
+        var trapItem = trap.GetComponent<TrapItemController>();
+        trapItem.InitTrapItem(position);
 
-        _traps.Add(_trapIndex, lineRenderer);
+        _traps.Add(_trapIndex, trapItem);
     }
 
     private int RandomTrapIndex()
