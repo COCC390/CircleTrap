@@ -36,4 +36,9 @@ public class GameController : MonoBehaviour
     {
         _trapRoots.Add(position);
     }
+
+    public void InitTrapAtStartGame()
+    {
+        _trapManager.InitTrapAtStartGame();
+    }
 }

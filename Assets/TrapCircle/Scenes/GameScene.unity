@@ -505,9 +505,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameConfig: {fileID: 0}
-  _circleRenderer: {fileID: 0}
-  _trapManager: {fileID: 0}
-  _ballMovement: {fileID: 0}
+  _circleRenderer: {fileID: 207402489}
+  _trapManager: {fileID: 31225623}
+  _ballMovement: {fileID: 1513606306}
   _score: 0
 --- !u!1 &1237822771
 GameObject:

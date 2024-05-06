@@ -44,6 +44,8 @@ public class CircleRenderer : MonoBehaviour
 
             _circleLineRenderer.SetPosition(currentStep, currentPosition);
         }
+
+        _controller.InitTrapAtStartGame();
     }
 
     private void OnDrawGizmos()
