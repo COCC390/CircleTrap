@@ -12,7 +12,7 @@ public class BallMovement : MonoBehaviour
     private bool _canMoving = false;
 
     [Header("Ball stats")]
-    [SerializeField] private float _moveRadian = 0.4f;
+    [SerializeField] private float _distanceFromCircleToMoveRadian = 0.4f;
     [SerializeField] private float _outerRadian = 2.3f;
     [SerializeField] private float _innerRadian = 1.7f;
     [SerializeField] private float _innerBuffSpeedValue = 1.5f;
@@ -29,6 +29,7 @@ public class BallMovement : MonoBehaviour
     public delegate void BallChangeRadian();
     public static BallChangeRadian ChangeCurrenRadianHandle;
 
+    #region Unity Function / View
     void Start()
     {
         SetBallMoveRadian(_circleRenderer.Radius);
@@ -63,11 +64,13 @@ public class BallMovement : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region Controller
     private void SetBallMoveRadian(float mainCircleRadius)
     {
-        _innerRadian = mainCircleRadius - _moveRadian;
-        _outerRadian = mainCircleRadius + _moveRadian;
+        _innerRadian = mainCircleRadius - _distanceFromCircleToMoveRadian;
+        _outerRadian = mainCircleRadius + _distanceFromCircleToMoveRadian;
     }
 
     public void ChangeCurrentRadian()
@@ -105,5 +108,5 @@ public class BallMovement : MonoBehaviour
         _currentAngle = Mathf.Atan2(this.transform.position.y, this.transform.position.x);
         _canMoving = true;
     }
-
+    #endregion
 }

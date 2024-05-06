@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private int _score;
 
     private List<Vector3> _trapRoots;
+    public List<Vector3> TrapRoots => _trapRoots;
 
     void Awake()
     {
