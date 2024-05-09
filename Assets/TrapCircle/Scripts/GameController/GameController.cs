@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private TrapController _trapManager;
     [SerializeField] private BallMovement _ballMovement;
 
+    public CircleRenderer Circle => _circleRenderer;
     [Header("Score")]
     [SerializeField] private int _score;
 

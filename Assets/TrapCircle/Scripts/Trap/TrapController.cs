@@ -53,14 +53,14 @@ public class TrapController : MonoBehaviour
     {
         var trap = Instantiate(_trapItem, this.transform);
         var trapItem = trap.GetComponent<TrapItemController>();
-        trapItem.InitTrapItem(position);
+        trapItem.InitTrapItem(position, _gameController.Circle.transform);
 
         _traps.Add(_trapIndex, trapItem);
     }
 
     private int RandomTrapIndex()
     {
-        var maxValue = _gameController.TrapRoots.Count - 1;
+        var maxValue = _gameController.TrapRoots.Count;
         var result = 0;
         while(_traps.ContainsKey(result))
         {

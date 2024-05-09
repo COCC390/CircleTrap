@@ -1,58 +1,48 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class TrapItemController : MonoBehaviour
 {
-    [SerializeField] private LineRenderer _lineRenderer;
-    [SerializeField] private float _trapHeight = 1.3f;
-
     [SerializeField] private TrapDirection _currentDirection;
 
-    public void InitTrapItem(Vector3 position)
+    private Vector3 _trapDirection;
+
+    public void InitTrapItem(Vector3 position, Transform mainCircleTransform)
     {
+        this.transform.position = position;
+
+        _trapDirection = new Vector3(this.transform.position.x - mainCircleTransform.position.x, this.transform.position.y - mainCircleTransform.position.y, 0f);
+
+        var angle = Mathf.Atan2(_trapDirection.y, _trapDirection.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
         _currentDirection = RandomDirection();
-
-        var trapDir = Vector3.zero;
-        if(_currentDirection == TrapDirection.In)
-            trapDir = new Vector3(position.x / _trapHeight, position.y / _trapHeight, 0);
-        else
-            trapDir = new Vector3(position.x * _trapHeight, position.y * _trapHeight, 0);
-
-        var points = new Vector3[2]
-        {
-            position, trapDir
-        };
-        _lineRenderer.SetPositions(points);
-    }    
+        if (_currentDirection == TrapDirection.In)
+            this.transform.localScale = new Vector3(-1f, 1f, 1f);
+    }
 
     public void SetTrapDirection()
     {
-        var position = _lineRenderer.GetPosition(0);
-
-        var trapDir = Vector3.zero;
         if (_currentDirection == TrapDirection.In)
         {
-            trapDir = new Vector3(position.x * _trapHeight, position.y * _trapHeight, 0);
+            this.transform.localScale = new Vector3(-1f, 1f, 1f);
             _currentDirection = TrapDirection.Out;
         }
         else
         {
-            trapDir = new Vector3(position.x / _trapHeight, position.y / _trapHeight, 0);
+            this.transform.localScale = new Vector3(1f, 1f, 1f);
             _currentDirection = TrapDirection.In;
         }
-
-        var points = new Vector3[2]
-        {
-            _lineRenderer.GetPosition(0), trapDir
-        };
-        _lineRenderer.SetPositions(points);
     }
 
     private TrapDirection RandomDirection()
     {
-        return (TrapDirection)Random.Range(0, 2);
+        return (TrapDirection)UnityEngine.Random.Range(0, 2);
     }
+
 }
 
 public enum TrapDirection
