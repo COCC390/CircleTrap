@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CircleRenderer : MonoBehaviour
 {
@@ -14,7 +15,9 @@ public class CircleRenderer : MonoBehaviour
     [SerializeField] private int _steps;
     [SerializeField] private float _radius;
     public float Radius => _radius;
-    List<Vector3> currentPositions = new List<Vector3>();
+
+    List<Vector3> currentPositions = new List<Vector3>();// test
+    Vector3 point;//test
     void Start()
     {
         _controller = FindObjectOfType<GameController>();
@@ -35,6 +38,7 @@ public class CircleRenderer : MonoBehaviour
             float xScaled = Mathf.Cos(currentRadian);
             float yScaled = Mathf.Sin(currentRadian);
 
+            //point = new Vector3(xScaled, yScaled, 0f);
             float x = xScaled * radius;
             float y = yScaled * radius;
 
@@ -50,13 +54,15 @@ public class CircleRenderer : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        foreach(var position in currentPositions)
-        {
-            Gizmos.DrawSphere(position, 0.01f);
-            Vector3 endpos = new Vector3(position.x / 1.3f, position.y / 1.3f, position.z);
-            Gizmos.DrawSphere(endpos, 0.01f);
-            Gizmos.DrawLine(position, endpos);
-        }
+        //foreach(var position in currentPositions)
+        //{
+        //    Gizmos.DrawSphere(position, 0.01f);
+        //    //Vector3 endpos = new Vector3(position.x / 1.3f, position.y / 1.3f, position.z);
+        //    //Gizmos.DrawSphere(endpos, 0.01f);
+        //    //Gizmos.DrawLine(position, endpos);
+        //}
+
+        Gizmos.DrawSphere(point, 0.01f);
     }
 
 }

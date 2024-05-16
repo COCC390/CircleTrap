@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,12 +12,16 @@ public class GameController : MonoBehaviour
     [SerializeField] private TrapController _trapManager;
     [SerializeField] private BallMovement _ballMovement;
 
+    public BallMovement Ball => _ballMovement;
+
     public CircleRenderer Circle => _circleRenderer;
     [Header("Score")]
     [SerializeField] private int _score;
 
     private List<Vector3> _trapRoots;
     public List<Vector3> TrapRoots => _trapRoots;
+
+    public Action<Vector2, Vector2> ON_BALL_REACH_PLAY_POINT;
 
     void Awake()
     {

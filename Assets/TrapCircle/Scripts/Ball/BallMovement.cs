@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class BallMovement : MonoBehaviour
 {
+    GameController _gameController;
+
     [Header("Ball init")]
     [SerializeField] private CircleRenderer _circleRenderer;
     [SerializeField] private float _initTime;
@@ -20,6 +22,9 @@ public class BallMovement : MonoBehaviour
     private float _currentAngle;
     private float _currentRadian;
 
+    private Vector2 _outerPoint;
+    private Vector2 _innerPoint;
+
     [Header("Ball Change Direction")]
     [SerializeField] private float _ballSwitchRadianSpeed;
     private float _interpolationValue = 0f;
@@ -32,12 +37,18 @@ public class BallMovement : MonoBehaviour
     #region Unity Function / View
     void Start()
     {
+        _gameController = FindObjectOfType<GameController>();
+
         SetBallMoveRadian(_circleRenderer.Radius);
 
-        Vector2 initTargetPos = new Vector2(this.transform.position.x, this.transform.position.y + _outerRadian);
+        //var initTargetPos = new Vector2(this.transform.position.x, this.transform.position.y + _outerRadian);
+
+        _outerPoint = new Vector2(this.transform.position.x, this.transform.position.y + _outerRadian); // outer point is init ball point
+        _innerPoint = new Vector2(this.transform.position.x, this.transform.position.y + _innerRadian);
+
         _currentRadian = _outerRadian;
 
-        StartCoroutine(InitBall(initTargetPos, _initTime));
+        StartCoroutine(InitBall(_outerPoint, _initTime));
 
         ChangeCurrenRadianHandle += ChangeCurrentRadian;
     }
@@ -113,6 +124,8 @@ public class BallMovement : MonoBehaviour
 
         _currentAngle = Mathf.Atan2(this.transform.position.y, this.transform.position.x);
         _canMoving = true;
+
+        _gameController.ON_BALL_REACH_PLAY_POINT?.Invoke(_outerPoint, _innerPoint);
     }
     #endregion
 }
