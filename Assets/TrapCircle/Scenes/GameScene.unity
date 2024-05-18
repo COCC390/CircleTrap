@@ -669,6 +669,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126293cefb24f1a4aaae1dec58b2a515, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _delayTimeSpawnPoint: 0.3
+  _minRandomDistance: 0.5
+  _maxRandomDistance: 99
   _pointItem: {fileID: 9071181859123232045, guid: 5b232c932e4e42641961c2514b0c149f, type: 3}
 --- !u!4 &1329001277
 Transform:
@@ -700,7 +703,7 @@ GameObject:
   - component: {fileID: 1513606308}
   m_Layer: 0
   m_Name: Ball
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

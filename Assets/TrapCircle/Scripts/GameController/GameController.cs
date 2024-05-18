@@ -21,7 +21,7 @@ public class GameController : MonoBehaviour
     private List<Vector3> _trapRoots;
     public List<Vector3> TrapRoots => _trapRoots;
 
-    public Action<Vector2, Vector2> ON_BALL_REACH_PLAY_POINT;
+    public Action<Vector2, Vector2, float, float> ON_BALL_REACH_PLAY_POINT;
 
     void Awake()
     {

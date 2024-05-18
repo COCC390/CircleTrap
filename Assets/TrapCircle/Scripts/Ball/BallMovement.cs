@@ -125,7 +125,7 @@ public class BallMovement : MonoBehaviour
         _currentAngle = Mathf.Atan2(this.transform.position.y, this.transform.position.x);
         _canMoving = true;
 
-        _gameController.ON_BALL_REACH_PLAY_POINT?.Invoke(_outerPoint, _innerPoint);
+        _gameController.ON_BALL_REACH_PLAY_POINT?.Invoke(_outerPoint, _innerPoint, _outerRadian, _innerRadian);
     }
     #endregion
 }
