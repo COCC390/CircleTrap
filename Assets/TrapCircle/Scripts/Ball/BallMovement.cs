@@ -34,6 +34,9 @@ public class BallMovement : MonoBehaviour
     public delegate void BallChangeRadian();
     public static BallChangeRadian ChangeCurrenRadianHandle;
 
+    [Header("Ball Effect")]
+    [SerializeField] private ParticleSystem _breakBallFX;
+
     #region Unity Function / View
     void Start()
     {
@@ -60,8 +63,10 @@ public class BallMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(_canMoving) 
+        if (_canMoving)
             BallMove(_currentRadian);
+        else
+            return;
 
         if(_isChangeRadian)
         {
@@ -78,7 +83,13 @@ public class BallMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Break!!!");
+        if(collision.gameObject.tag.Equals("Trap"))
+        {
+            _canMoving = false;
+
+            this.GetComponent<SpriteRenderer>().enabled = false;
+            _breakBallFX.Play();
+        }
     }
 
     #endregion

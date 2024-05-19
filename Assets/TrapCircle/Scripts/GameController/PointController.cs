@@ -72,7 +72,13 @@ public class PointController : MonoBehaviour
         return value == 0 ? _outerRadius : _innerRadius;
     }
 
-    private void OnPlayerReachPointItem() => StartCoroutine(DelaySpawnPointItem());
+    private void OnPlayerReachPointItem()
+    {
+        TrapController.InitMoreTrapHandle?.Invoke();
+        TrapController.RandomTrapChangeDirection?.Invoke();
+
+        StartCoroutine(DelaySpawnPointItem());
+    }
 
     private IEnumerator DelaySpawnPointItem()
     {

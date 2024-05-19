@@ -16,10 +16,23 @@ public class TrapController : MonoBehaviour
 
     private int _trapIndex = 0;
 
+    public delegate void TrapControl();
+    public static TrapControl RandomTrapChangeDirection;
+    public static TrapControl InitMoreTrapHandle;
+
     private void Start()
     {
         _gameController = FindObjectOfType<GameController>();
         _trapPositions = new List<Vector3>();
+
+        InitMoreTrapHandle += GenerateTrapByIndex;
+        RandomTrapChangeDirection += ChangeTrapDirection;
+    }
+
+    private void OnDestroy()
+    {
+        InitMoreTrapHandle -= GenerateTrapByIndex;
+        RandomTrapChangeDirection -= ChangeTrapDirection;
     }
 
     void Update()
@@ -28,7 +41,7 @@ public class TrapController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             //GenerateTrapByIndex();
-            ChangeTrapDirection(0);
+            ChangeTrapDirection();
         }
     }
 
@@ -49,16 +62,22 @@ public class TrapController : MonoBehaviour
     private void GenerateTrapByIndex()
     {
         //_trapIndex = RandomTrap();
+        if (_trapPositions.Count == 0)
+        {
+            InitMoreTrapHandle -= GenerateTrapByIndex;
+            return;
+        } 
+
         var trapPos = _trapPositions.GetRandomElementInList();
         _trapPositions.Remove(trapPos);
 
         InitTrap(trapPos);
     }
 
-    private void ChangeTrapDirection(int index)
+    private void ChangeTrapDirection()
     {
-        var trap = _traps[index];
-        trap.SetTrapDirection();
+        var trap = _traps.GetRandomElementInList();
+        trap.Value.SetTrapDirection();
     }
 
     private void InitTrap(Vector3 position)
