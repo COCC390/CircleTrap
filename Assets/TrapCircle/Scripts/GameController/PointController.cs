@@ -74,16 +74,17 @@ public class PointController : MonoBehaviour
 
     private void OnPlayerReachPointItem()
     {
-        TrapController.InitMoreTrapHandle?.Invoke();
-        TrapController.RandomTrapChangeDirection?.Invoke();
-
-        StartCoroutine(DelaySpawnPointItem());
-    }
-
-    private IEnumerator DelaySpawnPointItem()
-    {
-        yield return new WaitForSeconds(_delayTimeSpawnPoint);
+        _controller.UpgradeGameDifficulty();
+        _controller.UpdateScore();
 
         SpawnRandomPoint();
+        //StartCoroutine(DelaySpawnPointItem());
     }
+
+    //private IEnumerator DelaySpawnPointItem()
+    //{
+    //    //yield return new WaitForSeconds(_delayTimeSpawnPoint);
+
+    //    SpawnRandomPoint();
+    //}
 }

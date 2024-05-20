@@ -35,24 +35,10 @@ public class TrapController : MonoBehaviour
         RandomTrapChangeDirection -= ChangeTrapDirection;
     }
 
-    void Update()
-    {
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            //GenerateTrapByIndex();
-            ChangeTrapDirection();
-        }
-    }
-
     internal void InitTrapAtStartGame()
     {
         InitRandomTrapPosition();
 
-        //foreach(var trapPos in _trapPositions) 
-        //{
-        //    InitTrap(trapPos);
-        //}
         for (int i = 0; i < _startGameTrapAmount; i++)
         {
             GenerateTrapByIndex();
@@ -61,7 +47,6 @@ public class TrapController : MonoBehaviour
 
     private void GenerateTrapByIndex()
     {
-        //_trapIndex = RandomTrap();
         if (_trapPositions.Count == 0)
         {
             InitMoreTrapHandle -= GenerateTrapByIndex;
@@ -89,24 +74,6 @@ public class TrapController : MonoBehaviour
         _traps.Add(_trapIndex, trapItem);
         _trapIndex++;
     }
-
-    //private int RandomTrap()
-    //{
-    //    var maxValue = _gameController.TrapRoots.Count;
-
-    //    if(_traps.Count == 0)
-    //    {
-    //        return Random.Range(0, maxValue);
-    //    }
-
-    //    var result = 0;
-    //    while(_traps.ContainsKey(result))
-    //    {
-    //        result = Random.Range(0, maxValue);
-    //    }
-
-    //    return result;
-    //}    
 
     private void InitRandomTrapPosition()
     {

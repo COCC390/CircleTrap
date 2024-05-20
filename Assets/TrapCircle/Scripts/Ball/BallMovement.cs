@@ -37,6 +37,8 @@ public class BallMovement : MonoBehaviour
     [Header("Ball Effect")]
     [SerializeField] private ParticleSystem _breakBallFX;
 
+    public Action<float> ON_UP_BALL_SPEED;
+
     #region Unity Function / View
     void Start()
     {
@@ -54,11 +56,14 @@ public class BallMovement : MonoBehaviour
         StartCoroutine(InitBall(_outerPoint, _initTime));
 
         ChangeCurrenRadianHandle += ChangeCurrentRadian;
+
+        ON_UP_BALL_SPEED += BallSpeedUp;
     }
 
     private void OnDestroy()
     {
         ChangeCurrenRadianHandle -= ChangeCurrentRadian;
+        ON_UP_BALL_SPEED -= BallSpeedUp;
     }
 
     private void FixedUpdate()
@@ -83,12 +88,13 @@ public class BallMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag.Equals("Trap"))
+        if (collision.gameObject.tag.Equals("Trap"))
         {
             _canMoving = false;
 
             this.GetComponent<SpriteRenderer>().enabled = false;
-            _breakBallFX.Play();
+            var breakFX = Instantiate(_breakBallFX, this.transform);
+            breakFX.Play();
         }
     }
 
@@ -138,5 +144,8 @@ public class BallMovement : MonoBehaviour
 
         _gameController.ON_BALL_REACH_PLAY_POINT?.Invoke(_outerPoint, _innerPoint, _outerRadian, _innerRadian);
     }
+
+    private void BallSpeedUp(float changeSpeed) => _ballSpeed += changeSpeed;
+    
     #endregion
 }
