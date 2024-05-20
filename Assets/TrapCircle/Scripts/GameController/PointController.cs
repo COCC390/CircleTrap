@@ -78,13 +78,6 @@ public class PointController : MonoBehaviour
         _controller.UpdateScore();
 
         SpawnRandomPoint();
-        //StartCoroutine(DelaySpawnPointItem());
     }
 
-    //private IEnumerator DelaySpawnPointItem()
-    //{
-    //    //yield return new WaitForSeconds(_delayTimeSpawnPoint);
-
-    //    SpawnRandomPoint();
-    //}
 }
