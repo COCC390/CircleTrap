@@ -1,3 +1,4 @@
+using Konzit.CasualGame.State;
 using Konzit.UI;
 using UnityEngine;
 using VContainer;
@@ -12,5 +13,7 @@ public class GlobalGameLifetimeScope : LifetimeScope
     {
         builder.RegisterComponent(_uiControlView);  
         builder.Register<IUIController, UIController>(Lifetime.Singleton);
+
+        builder.Register<StateManager>(Lifetime.Singleton);
     }
 }
