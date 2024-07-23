@@ -1,26 +1,50 @@
 using Konzit.CasualGame.State;
 using UnityEngine;
+using VContainer;
 
-public class GameInitializeState : IState
+public class GameInitializeState : BaseState
 {
-    public void Initialize()
+    [Inject] private StateManager _stateManager;
+
+    public override void Initialize()
     {
         Debug.Log("Game Initialize State");
+        ChangeState(StateName.StartGame);
     }
 
-    public void ChangeState(string stateName)
+    public override void Dispose()
+    {
+        Debug.Log("Game Initialize State Dispose");
+    }
+
+    public override void OnState()
     {
         throw new System.NotImplementedException();
     }
 
-    public void Dispose()
+    public override void ChangeState(string stateName)
     {
-        throw new System.NotImplementedException();
+        base.ChangeState(stateName);
+        _stateManager.SwitchToState(stateName);
+    }
+}
+
+public class BaseState : IState
+{
+    public virtual void Initialize()
+    {
     }
 
-   
-    public void OnState()
+    public virtual void OnState()
     {
-        throw new System.NotImplementedException();
+    }
+
+    public virtual void Dispose()
+    {
+    }
+
+    public virtual void ChangeState(string stateName)
+    {
+        Dispose();
     }
 }
