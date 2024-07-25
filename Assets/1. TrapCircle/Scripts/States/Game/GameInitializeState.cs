@@ -4,7 +4,12 @@ using VContainer;
 
 public class GameInitializeState : BaseState
 {
-    [Inject] private StateManager _stateManager;
+    [Inject] private IStateManager _stateManager;
+
+    public GameInitializeState(IStateManager stateManager)
+    {
+        _stateManager = stateManager;
+    }
 
     public override void Initialize()
     {

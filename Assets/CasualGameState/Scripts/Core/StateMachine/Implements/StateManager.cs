@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Konzit.CasualGame.State
@@ -50,7 +52,27 @@ namespace Konzit.CasualGame.State
             {
                 //IState state = (IState)Activator.CreateInstance("IState", stateName.ToString());
                 Type type = Type.GetType(stateName);
-                var state = (IState)Activator.CreateInstance(type);
+                //var state = (IState)Activator.CreateInstance(type);
+                var constructor = type.GetConstructors()[0];
+                IState state;
+                if(!constructor.GetParameters().Any())
+                {
+                    state = (IState)constructor.Invoke(null);
+                }
+                else
+                {
+                    var parameters = constructor.GetParameters();
+                    var parameter = parameters[0].ParameterType;
+                    List<object> modules = new List<object>();
+                    if(!(this.GetType() is IStateManager))
+                    {
+                        throw new NullReferenceException();
+                    }
+
+                    modules.Add(this);
+                    state = (IState)constructor.Invoke(modules.ToArray());
+                }
+
                 _gameStates.Add(stateName, state);
             }
             catch (Exception ex)
