@@ -4,11 +4,11 @@ using VContainer;
 
 public class GameInitializeState : BaseState
 {
-    [Inject] private IStateManager _stateManager;
+    private IStateManager _stateManager;
 
-    public GameInitializeState(IStateManager stateManager)
+    public GameInitializeState(IObjectResolver container)
     {
-        _stateManager = stateManager;
+        _stateManager = container.Resolve<IStateManager>();
     }
 
     public override void Initialize()
@@ -24,7 +24,7 @@ public class GameInitializeState : BaseState
 
     public override void OnState()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Game Initialize On State");
     }
 
     public override void ChangeState(string stateName)
@@ -34,19 +34,14 @@ public class GameInitializeState : BaseState
     }
 }
 
-public class BaseState : IState
+public abstract class BaseState : IState
 {
-    public virtual void Initialize()
-    {
-    }
+    public abstract void Initialize();
 
-    public virtual void OnState()
-    {
-    }
+    public abstract void OnState();
 
-    public virtual void Dispose()
-    {
-    }
+
+    public abstract void Dispose();
 
     public virtual void ChangeState(string stateName)
     {

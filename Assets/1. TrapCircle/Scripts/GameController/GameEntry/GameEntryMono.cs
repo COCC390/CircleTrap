@@ -8,12 +8,12 @@ using VContainer;
 public class GameEntryMono : MonoBehaviour
 {
     [Inject] private IUIController _uiController;
-    [Inject] private StateManager _stateManager;
+    [Inject] private IStateManager _stateManager;
     
     void Start()
     {
         _uiController.OpenPopupByName(PopupName.MainMenuPopup.ToString());
-        _stateManager.SwitchToState(StateName.InitState);
+        //_stateManager.SwitchToState(StateName.InitState);
     }
 
 }

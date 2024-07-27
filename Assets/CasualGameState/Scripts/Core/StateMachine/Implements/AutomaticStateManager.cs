@@ -23,39 +23,44 @@
  * ...
  * 
  */
+using Konzit.Core.Adapter;
 using System;
 
 namespace Konzit.CasualGame.State
 {
-    public class AutomaticStateManager<T> : StateManager where T: Enum
-    {
-        private Array _allState;
-        private int _nextState = 0;
+    //public class AutomaticStateManager<T> : StateManager where T: Enum
+    //{
+    //    private Array _allState;
+    //    private int _nextState = 0;
 
-        public override void Initialize() 
-        { 
-            base.Initialize();
-            CreateInstanceOfAllState();
-        }
+    //    public AutomaticStateManager(IGenericAdapter adapter) : base(adapter)
+    //    {
+    //    }
 
-        #region
-        private void CreateInstanceOfAllState()
-        {
-            _allState = Enum.GetValues(typeof(T));
-            foreach (var state in _allState)
-            {
-                CreateStateByName((string)state);
-            }
-        }
+    //    public override void Initialize() 
+    //    { 
+    //        base.Initialize();
+    //        CreateInstanceOfAllState();
+    //    }
 
-        public void SwitchToState()
-        {
-            if(_allState.Length > 0 && _nextState < _allState.Length)
-            {
-                SwitchToState((string)_allState.GetValue(_nextState));
-                _nextState++;
-            }
-        }
-        #endregion
-    }
+    //    #region
+    //    private void CreateInstanceOfAllState()
+    //    {
+    //        _allState = Enum.GetValues(typeof(T));
+    //        foreach (var state in _allState)
+    //        {
+    //            CreateStateByName((string)state);
+    //        }
+    //    }
+
+    //    public void SwitchToState()
+    //    {
+    //        if(_allState.Length > 0 && _nextState < _allState.Length)
+    //        {
+    //            SwitchToState((string)_allState.GetValue(_nextState));
+    //            _nextState++;
+    //        }
+    //    }
+    //    #endregion
+    //}
 }

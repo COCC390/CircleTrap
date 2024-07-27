@@ -1,4 +1,5 @@
 using Konzit.CasualGame.State;
+using Konzit.Core.Adapter;
 using Konzit.UI;
 using UnityEngine;
 using VContainer;
@@ -11,9 +12,10 @@ public class GlobalGameLifetimeScope : LifetimeScope
 
     protected override void Configure(IContainerBuilder builder)
     {
+        builder.Register<IGenericAdapter<Container>, ServiceToAdapter<Container>>(Lifetime.Singleton);
         builder.RegisterComponent(_uiControlView);  
         builder.Register<IUIController, UIController>(Lifetime.Singleton);
 
-        builder.Register<StateManager>(Lifetime.Singleton);
+        builder.Register<IStateManager, StateManager<Container>>(Lifetime.Singleton);
     }
 }
