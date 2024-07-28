@@ -2,22 +2,26 @@
  * Author: DevDaoSi
  * @2024
  */
+using Konzit.Core.Adapter;
 using Konzit.Core.NullObject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using VContainer;
 
 namespace Konzit.UI
 {
     public class UIController : IUIController
     {
+        internal IGenericAdapter<IObjectResolver> adapter;
         private Dictionary<string, IPopup> _popupDict = new Dictionary<string, IPopup>();
         private UIControllerView _view;
 
         #region Constructor
-        public UIController(UIControllerView view)
+        public UIController(UIControllerView view, IGenericAdapter<IObjectResolver> adapter)
         {
+            this.adapter = adapter;
             _view = view;
         }
         #endregion

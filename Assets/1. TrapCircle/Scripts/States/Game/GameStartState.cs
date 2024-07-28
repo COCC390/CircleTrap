@@ -8,10 +8,6 @@ public class GameStartState : BaseState
 {
     private IStateManager _stateManager;
 
-    public GameStartState()
-    {
-    }
-
     public GameStartState(IObjectResolver container)
     {
         _stateManager = container.Resolve<IStateManager>();
