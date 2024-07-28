@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using VContainer;
 
 namespace Konzit.CasualGame.State
 {
@@ -48,15 +47,12 @@ namespace Konzit.CasualGame.State
             return null;
         }
 
-        [Obsolete]
-        protected void ManualInjectParameterCreateStateByName(string stateName)
+        protected void CreateStateByName(string stateName)
         {
             if (_gameStates.ContainsKey(stateName)) return;
             try
             {
-                //IState state = (IState)Activator.CreateInstance("IState", stateName.ToString());
                 Type type = Type.GetType(stateName);
-                //var state = (IState)Activator.CreateInstance(type);
                 var constructor = type.GetConstructors()[0];
                 IState state;
                 if(!constructor.GetParameters().Any())
@@ -66,14 +62,10 @@ namespace Konzit.CasualGame.State
                 else
                 {
                     var parameters = constructor.GetParameters();
-                    var parameter = parameters[0].ParameterType;
-                    List<object> modules = new List<object>();
-                    if(!(typeof(IStateManager).IsAssignableFrom(this.GetType())))
+                    List<object> modules = new List<object>
                     {
-                        throw new NullReferenceException();
-                    }
-
-                    modules.Add(this);
+                        _adapter.GetModule()
+                    };
                     state = (IState)constructor.Invoke(modules.ToArray());
                 }
 
@@ -85,7 +77,7 @@ namespace Konzit.CasualGame.State
             }
         }
 
-        protected void CreateStateByName(string stateName)
+        protected void SimpleCreateStateByName(string stateName)
         {
             if (_gameStates.ContainsKey(stateName)) return;
             try

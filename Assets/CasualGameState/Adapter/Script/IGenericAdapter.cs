@@ -17,7 +17,7 @@ namespace Konzit.Core.Adapter
     {
         private object _module;
 
-        public ServiceToAdapter(object module)
+        public ServiceToAdapter(T module)
         {
             _module = module;
         }

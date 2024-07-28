@@ -12,10 +12,10 @@ public class GlobalGameLifetimeScope : LifetimeScope
 
     protected override void Configure(IContainerBuilder builder)
     {
-        builder.Register<IGenericAdapter<Container>, ServiceToAdapter<Container>>(Lifetime.Singleton);
+        builder.Register<IGenericAdapter<IObjectResolver>, ServiceToAdapter<IObjectResolver>>(Lifetime.Singleton);
         builder.RegisterComponent(_uiControlView);  
         builder.Register<IUIController, UIController>(Lifetime.Singleton);
 
-        builder.Register<IStateManager, StateManager<Container>>(Lifetime.Singleton);
+        builder.Register<IStateManager, StateManager<IObjectResolver>>(Lifetime.Singleton);
     }
 }

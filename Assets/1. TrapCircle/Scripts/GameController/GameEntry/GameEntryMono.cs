@@ -1,7 +1,5 @@
 using Konzit.CasualGame.State;
 using Konzit.UI;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
 
@@ -13,7 +11,7 @@ public class GameEntryMono : MonoBehaviour
     void Start()
     {
         _uiController.OpenPopupByName(PopupName.MainMenuPopup.ToString());
-        //_stateManager.SwitchToState(StateName.InitState);
+        _stateManager.SwitchToState(StateName.InitState);
     }
 
 }
