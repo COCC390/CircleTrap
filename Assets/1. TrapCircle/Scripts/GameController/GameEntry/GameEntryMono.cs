@@ -10,7 +10,6 @@ public class GameEntryMono : MonoBehaviour
     
     void Start()
     {
-        _uiController.OpenPopupByName(PopupName.MainMenuPopup.ToString());
         _stateManager.SwitchToState(StateName.InitState);
     }
 

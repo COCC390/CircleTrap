@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Konzit.UI;
+using Konzit.CasualGame.State;
+using UnityEngine.SceneManagement;
 
 public class MainMenuPopup : BasePopup
 {
+    private IStateManager _stateManager;
     public override void OnShowing()
     {
         
@@ -14,6 +17,12 @@ public class MainMenuPopup : BasePopup
     public void OnClickPlayGame()
     {
         Debug.Log("---Start Game By Switch To Game Init State");
+        SceneManager.LoadScene(1, LoadSceneMode.Additive);
+
+        _manager.HidePopupByName(PopupName.MainMenuPopup.ToString());
+
+        _stateManager.SwitchToState(StateName.StartGame);
+
     }
 
     public void OnClickMusicBtn()

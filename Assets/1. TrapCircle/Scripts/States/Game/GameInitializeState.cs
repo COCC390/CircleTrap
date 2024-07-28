@@ -1,20 +1,23 @@
 using Konzit.CasualGame.State;
+using Konzit.UI;
 using UnityEngine;
 using VContainer;
 
 public class GameInitializeState : BaseState
 {
     private IStateManager _stateManager;
+    private IUIController _uiController;
 
     public GameInitializeState(IObjectResolver container)
     {
         _stateManager = container.Resolve<IStateManager>();
+        _uiController = container.Resolve<IUIController>();
     }
 
     public override void Initialize()
     {
         Debug.Log("Game Initialize State");
-        ChangeState(StateName.StartGame);
+        _uiController.OpenPopupByName(PopupName.MainMenuPopup.ToString());
     }
 
     public override void Dispose()
