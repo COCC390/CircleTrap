@@ -95,6 +95,8 @@ public class BallMovement : MonoBehaviour
             this.GetComponent<SpriteRenderer>().enabled = false;
             var breakFX = Instantiate(_breakBallFX, this.transform);
             breakFX.Play();
+
+            // call to gamemanager -> call state manager -> set game state to lose state -> call ui manager to show end game popup
         }
     }
 
